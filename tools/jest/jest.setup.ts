@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom'
+import '@testing-library/jest-dom';
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -10,6 +10,6 @@ Object.defineProperty(window, 'matchMedia', {
     removeListener: jest.fn(), // deprecated
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn()
-  }))
-})
+    dispatchEvent: jest.fn(),
+  })),
+});
