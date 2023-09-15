@@ -8,8 +8,9 @@
     "build": "cross-env NODE_ENV=production webpack --config tools/webpack/webpack.config.cjs",
     "dev:vite": "vite",
     "build:vite": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
+    "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "npm run lint -- --fix",
     "test": "jest --config=tools/jest/jest.config.cjs"
   },
   "dependencies": {

@@ -560,3 +560,11 @@ $ npm run test
 ```
 
 <br />
+
+## 4. Set Eslint + prettier
+
+install:
+```sh
+# prettier
+$ npm install --save-dev prettier eslint-config-prettier eslint-plugin-prettier
+```
