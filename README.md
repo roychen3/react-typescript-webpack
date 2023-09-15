@@ -14,9 +14,9 @@ node version: 18.17.1
 
 <br />
 
-## 2. Setting webpack config
+## 2. Set webpack config
 
-### Setting base webpack config
+### Set base webpack config
 
 install:
 ```sh
@@ -88,13 +88,14 @@ module.exports = {
 
 <br />
 
-### Setting devServer
+### Set devServer
 
 install:
 ```sh
 $ npm install --save-dev webpack-dev-server
 ```
 
+`./tools/webpack/webpack.config.cjs`
 ```js
 ...
 module.exports = {
@@ -261,7 +262,7 @@ module.exports = {
 
 ### Handle env file
 
-install
+install:
 ```sh
 $ npm install --save-dev dotenv
 ```
@@ -299,10 +300,18 @@ module.exports = {
 ...
 ```
 
+`.gitignore`
+```diff
+...
++ env
+...
+```
+
 <br />
 
-### Setting alias
+### Set alias
 
+`./tools/webpack/webpack.config.cjs`
 ```js
 module.exports = {
 ...
@@ -318,7 +327,7 @@ module.exports = {
 
 <br />
 
-### adjust `tsconfig.json`:
+### Set `tsconfig.json`:
 ```diff
 {
   "compilerOptions": {
@@ -359,7 +368,7 @@ module.exports = {
 
 <br />
 
-### adjust `package.json`:
+### Set `package.json`:
 ```diff
 ...
 	"scripts": {
@@ -376,7 +385,7 @@ module.exports = {
 
 <br />
 
-## Just using babel
+### Just using babel
 
 install:
 ```sh
@@ -384,27 +393,170 @@ install:
 $ npm install --save-dev @babel/core @babel/preset-env @babel/preset-react @babel/preset-typescript babel-loader
 ```
 
-`./tools/webpack/webpack.config.js`
-```js
+`./tools/webpack/webpack.config.cjs`
+```diff
 ...
   module: {
     rules: [
     ...
-      {
-         test: /\.(t|j)sx?$/,
-         exclude: /(node_modules|bower_components)/,
-         use: {
-         loader: 'babel-loader',
-         options: {
-            presets: [
-               '@babel/preset-env',
-               ['@babel/preset-react', { runtime: 'automatic' }],
-               '@babel/preset-typescript',
-            ],
-         },
-         },
-      },
+-     {
+-       test: /\.(t|j)sx?$/,
+-       exclude: /node_modules/,
+-       use: {
+-         loader: 'ts-loader',
+-         options: {
+-           transpileOnly: true, // need this option for typescript config `noEmit`
+-         },
+-       },
+-     },
++     {
++        test: /\.(t|j)sx?$/,
++        exclude: /(node_modules|bower_components)/,
++        use: {
++        loader: 'babel-loader',
++        options: {
++           presets: [
++              '@babel/preset-env',
++              ['@babel/preset-react', { runtime: 'automatic' }],
++              '@babel/preset-typescript',
++           ],
++        },
++        },
++     },
     ],
   },
 ...
 ```
+
+<br />
+
+## 3. Set unit test
+
+### Install:
+
+```sh
+# jest & swc:
+$ npm install --save-dev @jest/globals @types/jest identity-obj-proxy jest jest-environment-jsdom @swc/core @swc/jest
+
+# react testing library:
+$ npm install --save-dev @testing-library/jest-dom @testing-library/react @testing-library/user-event
+```
+
+### Set jest
+
+create `./tools/jest/jest.config.cjs`:
+```js
+const rootPath = process.cwd()
+
+module.exports = {
+  rootDir: rootPath,
+  clearMocks: true,
+  collectCoverage: true,
+  coverageDirectory: 'coverage',
+  moduleDirectories: ['node_modules', 'src'],
+  moduleFileExtensions: [
+    'js',
+    'jsx',
+    'ts',
+    'tsx',
+    'json',
+    'node'
+  ],
+  moduleNameMapper: {
+    '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
+      '<rootDir>/tools/jest/__mocks__/fileMock.js',
+    '\\.(css|scss|sass)$': 'identity-obj-proxy', // mocking CSS modules
+    // alias
+    '^@/(.*)$': '<rootDir>/$1'
+  },
+  testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/tools/jest/jest.setup.ts'],
+  transform: {
+    '^.+\\.(t|j)sx?$': [
+      '@swc/jest',
+      {
+        jsc: {
+          transform: {
+            react: {
+              runtime: 'automatic'
+            }
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+<br />
+
+create `./tools/jest/jest.setup.ts`:
+```js
+import '@testing-library/jest-dom'
+
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // deprecated
+    removeListener: jest.fn(), // deprecated
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn()
+  }))
+})
+```
+
+`.gitignore`
+```diff
+...
++ coverage
+...
+```
+
+### Write testing
+create `./src/App.test.tsx`
+```jsx
+import { render, screen, fireEvent } from '@testing-library/react'
+
+import App from '@/src/App'
+
+it('should render the Vite and React logos', () => {
+  render(<App />)
+  const viteLogo = screen.getByAltText('Vite logo')
+  const reactLogo = screen.getByAltText('React logo')
+  expect(viteLogo).toBeInTheDocument()
+  expect(reactLogo).toBeInTheDocument()
+})
+
+it('should render the title "Vite + React"', () => {
+  render(<App />)
+  const title = screen.getByText('Vite + React')
+  expect(title).toBeInTheDocument()
+})
+
+it('should render a card with a button that increments the counter when clicked', () => {
+  render(<App />)
+  const button = screen.getByRole('button', { name: /count is \d+/i })
+  fireEvent.click(button)
+  expect(button).toHaveTextContent(/count is \d+/i)
+})
+```
+
+### Set `package.json` & Run test
+```diff
+...
+  "scripts": {
+    ...
++  "test": "jest --config=tools/jest/jest.config.cjs"
+  },
+...
+```
+
+```
+$ npm run test
+```
+
+<br />
