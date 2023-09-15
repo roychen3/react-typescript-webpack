@@ -1,4 +1,4 @@
-const rootPath = process.cwd()
+const rootPath = process.cwd();
 
 /**
  * For a detailed explanation regarding each configuration property, visit:
@@ -16,7 +16,7 @@ module.exports = {
     'ts',
     'tsx',
     'json',
-    'node'
+    'node',
     // "mjs",
     // "cjs",
   ],
@@ -25,7 +25,7 @@ module.exports = {
       '<rootDir>/tools/jest/__mocks__/fileMock.js',
     '\\.(css|scss|sass)$': 'identity-obj-proxy', // mocking CSS modules
     // alias
-    '^@/(.*)$': '<rootDir>/$1'
+    '^@/(.*)$': '<rootDir>/$1',
   },
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/tools/jest/jest.setup.ts'],
@@ -36,11 +36,11 @@ module.exports = {
         jsc: {
           transform: {
             react: {
-              runtime: 'automatic'
-            }
-          }
-        }
-      }
-    ]
-  }
-}
+              runtime: 'automatic',
+            },
+          },
+        },
+      },
+    ],
+  },
+};
