@@ -300,7 +300,7 @@ module.exports = {
 ...
 ```
 
-`.gitignore`
+`./.gitignore`
 ```diff
 ...
 + env
@@ -509,7 +509,7 @@ Object.defineProperty(window, 'matchMedia', {
 })
 ```
 
-`.gitignore`
+set `./.gitignore`
 ```diff
 ...
 + coverage
@@ -561,10 +561,104 @@ $ npm run test
 
 <br />
 
-## 4. Set Eslint + prettier
+## 4. Set Eslint
+
+`./.eslintrc.cjs`
+```diff
+module.exports = {
+  ...
+  rules: {
+    'react-refresh/only-export-components': [
+      'warn',
+      { allowConstantExport: true },
+    ],
++    indent: ['error', 2],
++    quotes: ['error', 'single'],
++    semi: ['error', 'always'],
++    'jsx-quotes': ['error', 'prefer-double'],
++  },
++  overrides: [
++    {
++      files: ['tools/**/*.{cjs,js,ts}'],
++      env: { node: true },
++      rules: {
++        '@typescript-eslint/no-var-requires': 'off',
++      },
++    },
++    {
++      files: ['**/*.{spec,test}.{j,t}s?(x)'],
++      env: { node: true, jest: true },
++    },
++  ],
+};
+```
+
+set `./package.json`
+```diff
+...
+  "scripts": {
+    ...
+-   "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
++   "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
++   "lint:fix": "npm run lint -- --fix",
+    "test": "jest --config=tools/jest/jest.config.cjs"
+  },
+...
+```
+
+## 5. Set prettier
 
 install:
 ```sh
-# prettier
 $ npm install --save-dev prettier eslint-config-prettier eslint-plugin-prettier
+```
+
+set `./.eslintrc.cjs`
+```diff
+module.exports = {
+  ...
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react-hooks/recommended',
++   'plugin:prettier/recommended' // Make sure to put `prettier` last
+  ],
+  ...
+  rules: {
+    'react-refresh/only-export-components': [
+      'warn',
+      { allowConstantExport: true },
+    ],
+-   indent: ['error', 2],
+-   quotes: ['error', 'single'],
+-   semi: ['error', 'always'],
+-   'jsx-quotes': ['error', 'prefer-double'],
++   "prettier/prettier": "error"
+  },
+  ...
+};
+```
+
+create `./prettier.config.cjs`
+```js
+module.exports = {
+  tabWidth: 2,
+  bracketSameLine: true,
+  jsxSingleQuote: false,
+  semi: true,
+  singleQuote: true,
+}
+```
+
+set `./package.json`
+```diff
+...
+  "scripts": {
+    ...
+    "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "npm run lint -- --fix",
++   "format": "prettier --cache --write \"**/*.+(js|jsx|ts|tsx|json|css|scss|sass)\"",
+    "test": "jest --config=tools/jest/jest.config.cjs"
+  },
+...
 ```
