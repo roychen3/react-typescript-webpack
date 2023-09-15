@@ -7,12 +7,12 @@ node version: 18.17.1
 ## Table of Contents
 
 * [1. Using `Vite` create project](#1)
-* [2. Set webpack config2. Set webpack config](#2)
-* [3. Set unit test3. Set unit test](#3)
-* [4. Set Eslint4. Set Eslint](#4)
-* [5. Set prettier5. Set prettier](#5)
-* [6. Run eslint fix6. Run eslint fix](#6)
-* [Fix ViteFix Vite](#fix-vite)
+* [2. Set webpack config](#2)
+* [3. Set unit test](#3)
+* [4. Set Eslint](#4)
+* [5. Set prettier](#5)
+* [6. Run eslint fix](#6)
+* [Fix Vite](#fix-vite)
 
 <br />
 
