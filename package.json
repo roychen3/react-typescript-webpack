@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack serve --config tools/webpack/webpack.config.cjs",
     "build": "cross-env NODE_ENV=production webpack --config tools/webpack/webpack.config.cjs",
-    "dev:vite": "vite",
-    "build:vite": "tsc && vite build",
-    "preview": "vite preview",
+    "dev:vite": "vite --config tools/vite/vite.config.ts",
+    "build:vite": "tsc && vite --config tools/vite/vite.config.ts build",
+    "preview": "vite  --config tools/vite/vite.config.ts preview",
     "ts-check": "tsc --noemit",
     "lint": "eslint . --ext ts,tsx,js,jsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "npm run lint -- --fix",
