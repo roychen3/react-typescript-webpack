@@ -6,6 +6,7 @@ node version: 18.17.1
 
 ## 1. Using `Vite` create project
 
+[commit: 5b7103](https://github.com/roychen3/react-typescript-webpack/commit/5b7103e9ad6bad0e74f44f6520529962a390b2b4)
 ```sh
 √ Project name: react-app
 √ Select a framework: » React
@@ -15,6 +16,8 @@ node version: 18.17.1
 <br />
 
 ## 2. Set webpack config
+
+[commit: a5a1b9](https://github.com/roychen3/react-typescript-webpack/commit/a5a1b9a1e8e59ecdd0279ddadf95be65b7436fe2)
 
 ### Set base webpack config
 
@@ -438,6 +441,8 @@ $ npm install --save-dev @babel/core @babel/preset-env @babel/preset-react @babe
 
 ## 3. Set unit test
 
+[commit: 6928fd](https://github.com/roychen3/react-typescript-webpack/commit/6928fd464c2b90d39cd8135b5238317969f3e515)
+
 ### Install:
 
 ```sh
@@ -569,6 +574,8 @@ $ npm run test
 
 ## 4. Set Eslint
 
+[commit: c148b9](https://github.com/roychen3/react-typescript-webpack/commit/c148b9cc9dc171c46a40d6d47ac4da0eb9558285)
+
 `./.eslintrc.cjs`
 ```diff
 module.exports = {
@@ -613,6 +620,8 @@ set `./package.json`
 ```
 
 ## 5. Set prettier
+
+[commit: ede8d5](https://github.com/roychen3/react-typescript-webpack/commit/ede8d5986e86e73ddcf188bc28d49911285cdac7)
 
 install:
 ```sh
@@ -672,6 +681,9 @@ set `./package.json`
 <br />
 
 ## 6. Run eslint fix
+
+[commit: e0f1e9](https://github.com/roychen3/react-typescript-webpack/commit/e0f1e9fe64715898b0359549c84c351e34bf4d2b)
+
 ```sh
 $ npm run lint:fix
 ```
@@ -679,6 +691,8 @@ $ npm run lint:fix
 <br />
 
 ## Fix Vite
+
+[commit: 694c66](https://github.com/roychen3/react-typescript-webpack/commit/694c661ff26d0e904a6dbbaabaa5a2aa840a66eb)
 
 move `./vite.config.ts` to `./tools/vite/vite.config.ts` and Set: 
 ```ts
