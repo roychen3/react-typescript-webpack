@@ -9,6 +9,7 @@
     "dev:vite": "vite",
     "build:vite": "tsc && vite build",
     "preview": "vite preview",
+    "ts-check": "tsc --noemit",
     "lint": "eslint . --ext ts,tsx,js,jsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier --cache --write \"**/*.+(js|jsx|ts|tsx|json|css|scss|sass)\"",
