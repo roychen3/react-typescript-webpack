@@ -662,3 +662,12 @@ set `./package.json`
   },
 ...
 ```
+
+<br />
+
+## 6. Run eslint fix
+```sh
+$ npm run lint:fix
+```
+
+<br />
