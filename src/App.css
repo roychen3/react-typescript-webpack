@@ -1,10 +1,9 @@
 .autoprefixer-example {
   display: grid;
-  transition: all .5s;
+  transition: all 0.5s;
   user-select: none;
   background: linear-gradient(to bottom, white, black);
 }
-
 
 #root {
   max-width: 1280px;

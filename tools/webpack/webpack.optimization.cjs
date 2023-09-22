@@ -12,13 +12,13 @@ function getOptimization() {
         vendor: {
           name: 'vendors',
           test: /[\\/]node_modules[\\/]/,
-          chunks: 'all'
-        }
-      }
-    }
-  }
+          chunks: 'all',
+        },
+      },
+    },
+  };
 }
 
 module.exports = {
-  getOptimization
-}
+  getOptimization,
+};

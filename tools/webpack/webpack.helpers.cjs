@@ -1,9 +1,9 @@
 function isDev() {
-  return process.env.NODE_ENV == 'development'
+  return process.env.NODE_ENV == 'development';
 }
 
 function getRootPath() {
-  return process.cwd()
+  return process.cwd();
 }
 
-module.exports = { isDev, getRootPath }
+module.exports = { isDev, getRootPath };
